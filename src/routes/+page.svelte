@@ -25,4 +25,12 @@ onMount(async () => {
 });
 </script>
 
-<canvas bind:this={canvas}></canvas>
+<div id="main">
+	<div id="menu">
+		<h1>Translucent PDF</h1>
+		<button class="button">H</button>
+	</div>
+	<div id="viewer">
+		<canvas bind:this={canvas}></canvas>
+	</div>
+</div>
