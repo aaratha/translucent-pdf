@@ -1,0 +1,7 @@
+body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden; /* Optional: Prevent scrolling */
+    background: transparent; /* Ensure background is transparent */
+    background-color: transparent; /* Ensure background is transparent */
+}
