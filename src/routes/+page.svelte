@@ -16,10 +16,12 @@ onMount(async () => {
   canvas.height = viewport.height;
   canvas.width = viewport.width;
 
+	 const fg = window.getComputedStyle(document.documentElement).getPropertyValue('--fg');
   const renderContext = {
     canvasContext: context,
     viewport: viewport,
-	background: 'rgba(0,0,0,0)'
+	background: 'rgba(0,0,0,0)',
+	pageColors: {background: 'rgba(0,0,0,0)', foreground: fg}
   };
   await page.render(renderContext);
 });
