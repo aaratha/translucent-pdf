@@ -32,7 +32,7 @@ function openNewWindow() {
     const newWindow = window.open(
       '/external.html',
       '',
-      'titleBarStyle=hidden,transparent=true,width=300,height=450,backgroundColor=#00000000,vibrancy=hud, frame=false',
+      'titleBarStyle=hidden, visualEffectState=active,transparent=true,width=470,height=410,backgroundColor=#00000000,vibrancy=hud, frame=false',
 	);
     newWindow.focus();
   }
