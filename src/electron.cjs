@@ -24,7 +24,6 @@ function createWindow() {
 	const mainWindow = new BrowserWindow({
 		backgroundColor: 'whitesmoke',
 		titleBarStyle: 'hidden',
-		autoHideMenuBar: true,
 		trafficLightPosition: {
 			x: 17,
 			y: 19,
@@ -46,8 +45,7 @@ function createWindow() {
 		transparent: true, // Make the window transparent
         backgroundColor: "#00000000", // transparent hexadecimal or anything with transparency,
         vibrancy: "hud", // in my case...
-        visualEffectState: "followWindow"
-
+        visualEffectState: "active"
 	});
 
 	windowState.manage(mainWindow);
