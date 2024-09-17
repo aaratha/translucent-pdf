@@ -1,0 +1,101 @@
+:root {
+  --bg: rgba(0,0,0,0) ;
+  --fg: rgba(255,255,255,0.2);
+  --ui-fg: 255,255,255;
+  --ui-bg: rgba(0,0,0,0.3);
+}
+
+
+body {
+    overflow: hidden;
+    margin: 0px;
+    padding: 0px;
+}
+
+#choose {
+    opacity: 0;
+    display: none;
+}
+
+#pdf-viewer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#pdf-viewer canvas {
+  margin-bottom: 20px; /* Add some space between pages */
+}
+
+h1 {
+    font: 18px sans-serif;
+    color: rgba(255,255,255,0.5);
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 150px; /* Need a specific value to work */
+}
+
+#main {
+    display: flex;
+    flex-direction: column;
+}
+
+#viewer {
+    width: 100vw;
+    height: 100vh;
+    overflow: scroll;
+}
+
+#menu {
+    width: 99.4vw;
+    height: 45px !important;
+    display: flex;
+    flex-direction: row-reverse;
+    background: var(--ui-bg);
+    padding: 5px;
+    padding-right: 10px;
+}
+
+#theme {
+    background: var(--bg);
+    display: flex;
+    flex-direction: row;
+}
+
+
+.wrapper {
+    margin-top: 10px;
+    top: 50px;
+}
+
+.button {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid rgba(var(--ui-fg),0.0);
+    margin-top: 2px;
+    z-index: 15;
+    background: var(--bg);
+    color: rgba(var(--ui-fg),0.5);
+    transition: all ease-in-out 0.05s;
+    margin-right: 8px;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.button:hover {
+    background: rgba(var(--ui-fg),0.1);
+    border: 1px solid rgba(var(--ui-fg),0.2);
+}
+
+label {
+    width: 38px !important;
+    height: 38px !important;
+
+}

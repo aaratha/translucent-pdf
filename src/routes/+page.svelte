@@ -1,9 +1,9 @@
 <script>
- import { onMount } from 'svelte';
+import { onMount } from 'svelte';
 import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf.mjs';
 import ThemeComponent from '../components/theme.svelte';
 
-let canvas;
+let pdfViewer;
 let fileInput;
 let refreshButton;
 let currentFile = null;
@@ -11,6 +11,7 @@ let currentFile = null;
 onMount(() => {
   fileInput = document.getElementById('choose');
   refreshButton = document.getElementById('refresh');
+  pdfViewer = document.getElementById('pdf-viewer');
   fileInput.addEventListener('change', handleFileSelect);
   refreshButton.addEventListener('click', handleRefresh);
 });
@@ -37,29 +38,35 @@ async function loadAndRenderPDF(file) {
   const fileReader = new FileReader();
   fileReader.onload = async function() {
     const typedarray = new Uint8Array(this.result);
-    await renderPDF(typedarray);
+    const loadingTask = pdfjsLib.getDocument({data: typedarray});
+    const pdf = await loadingTask.promise;
+
+    pdfViewer.innerHTML = ''; // Clear existing content
+
+    const fg = getComputedStyle(document.documentElement).getPropertyValue('--fg');
+    const bg = getComputedStyle(document.documentElement).getPropertyValue('--bg');
+
+    for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+      const page = await pdf.getPage(pageNum);
+      const scale = 1.5;
+      const viewport = page.getViewport({ scale });
+
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+      canvas.height = viewport.height;
+      canvas.width = viewport.width;
+
+      pdfViewer.appendChild(canvas);
+
+      await page.render({
+        canvasContext: context,
+        viewport: viewport,
+        background: 'rgba(0,0,0,0)',
+        pageColors: {background: 'rgba(0,0,0,0)', foreground: fg}
+      });
+    }
   };
   fileReader.readAsArrayBuffer(file);
-}
-
-async function renderPDF(pdfData) {
-  const loadingTask = pdfjsLib.getDocument({data: pdfData});
-  const pdf = await loadingTask.promise;
-  const page = await pdf.getPage(1);
-  const scale = 1.5;
-  const viewport = page.getViewport({ scale });
-  const context = canvas.getContext('2d');
-  canvas.height = viewport.height;
-  canvas.width = viewport.width;
-  const fg = window.getComputedStyle(document.documentElement).getPropertyValue('--fg');
-  const bg = window.getComputedStyle(document.documentElement).getPropertyValue('--bg');
-  const renderContext = {
-    canvasContext: context,
-    viewport: viewport,
-    background: 'rgba(0,0,0,0)',
-    pageColors: {background: 'rgba(0,0,0,0)', foreground: fg}
-  };
-  await page.render(renderContext);
 }
 
 function openNewWindow() {
@@ -95,6 +102,6 @@ function openNewWindow() {
 		</button>
 	</div>
 	<div id="viewer">
-		<canvas bind:this={canvas}></canvas>
+		<div id="pdf-viewer"></div>
 	</div>
 </div>
